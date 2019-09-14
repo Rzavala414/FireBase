@@ -26,19 +26,23 @@ $("#add-train-btn").on("click", function(event) {
   event.preventDefault();
 
   // Grabs user input
+  //a new id was created to be used when the train is being named. then we attached a value and trim method at the end of our new id
   var trainName = $("#train-name-input")
     .val()
     .trim();
+    //a new id was created to be used when the destination is being used.  then we attached a value and trim method at the end of our new id
   var destination = $("#destination-input")
     .val()
     .trim();
+    //a new id was created to hold the first trains input. then we attached a value and trim method at the end of our new id
   var firstTrain = $("#first-train-input")
     .val()
     .trim();
+    //a new id was created to hold the the value of the frequency. then we attached a value and trim method at the end of our new id
   var frequency = $("#frequency-input")
     .val()
     .trim();
-
+  
   // Creates local "temporary" object for holding train data
   var newTrain = {
     name: trainName,
@@ -48,18 +52,25 @@ $("#add-train-btn").on("click", function(event) {
   };
 
   // Uploads train data to the database
+  //does exactly what is says above
   trainData.ref().push(newTrain);
 
   // Logs everything to console
+  //logs the information for the trains  name
   console.log(newTrain.name);
+  //logs the information for the destination
   console.log(newTrain.destination);
+  //logs the information for the trains our first train
   console.log(newTrain.firstTrain);
+  //logs the information for the trains frequency 
   console.log(newTrain.frequency);
 
   // Alert
+  // this line a code will run once a value has be add by the user
   alert("Train successfully added");
 
   // Clears all of the text-boxes
+  //once the user is done putting their information we clear out the values in the input boxes and set them to an empty string
   $("#train-name-input").val("");
   $("#destination-input").val("");
   $("#first-train-input").val("");
@@ -67,15 +78,17 @@ $("#add-train-btn").on("click", function(event) {
 });
 
 // 4. Create Firebase event for adding trains to the database and a row in the html when a user adds an entry
+//the preChidKey is declared but never read for some reason??
 trainData.ref().on("child_added", function(childSnapshot, prevChildKey) {
   console.log(childSnapshot.val());
 
   // Store everything into a variable.
+  //take the info from the input boxes that were stored into an object and then placed into new variables
   var tName = childSnapshot.val().name;
   var tDestination = childSnapshot.val().destination;
   var tFrequency = childSnapshot.val().frequency;
   var tFirstTrain = childSnapshot.val().firstTrain;
-
+// we are splitting the value at : and storing everything after the : into the timearr variable
   var timeArr = tFirstTrain.split(":");
   var trainTime = moment()
     .hours(timeArr[0])
