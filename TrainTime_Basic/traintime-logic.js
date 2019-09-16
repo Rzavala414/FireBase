@@ -94,7 +94,9 @@ trainData.ref().on("child_added", function(childSnapshot, prevChildKey) {
     .hours(timeArr[0])
     .minutes(timeArr[1]);
   var maxMoment = moment.max(moment(), trainTime);
+  //stores train minutes
   var tMinutes;
+  //stores trains arrival time
   var tArrival;
 
   // If the first train is later than the current time, sent arrival to the first train time
@@ -110,10 +112,13 @@ trainData.ref().on("child_added", function(childSnapshot, prevChildKey) {
     tMinutes = tFrequency - tRemainder;
     // To calculate the arrival time, add the tMinutes to the current time
     tArrival = moment()
+    //adds minutes to train arrival time
       .add(tMinutes, "m")
       .format("hh:mm A");
   }
+  //console logging out train's minutes
   console.log("tMinutes:", tMinutes);
+  //console logging out train's minutes
   console.log("tArrival:", tArrival);
 
   // Add each train's data into the table
